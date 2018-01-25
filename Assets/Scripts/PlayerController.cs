@@ -13,13 +13,17 @@ public class PlayerController : MonoBehaviour
     private PlayerState _playerState;
     public PlayerState PlayerState
     {
+        get { return _playerState; }
         set
         {
             _playerState = value;
             ActionChange(value);
         }
     }
-
+    public LayerMask CollisionMask;
+    public Transform GroundCheck;
+    public float CollisionCircleRadius;
+    public float JumpForce;
 
     private void Start()
     {
@@ -28,9 +32,25 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (GroundCheck())
+        Debug.Log(IsGrounded());
+        if (IsGrounded())
         {
-
+            if (PlayerState != PlayerState.GROUND)
+            {
+                Land();
+                PlayerState = PlayerState.GROUND;
+            }
+            else
+            {
+                Enlarge();
+            }
+        }
+        else
+        {
+            if (PlayerState != PlayerState.AIR)
+            {
+                PlayerState = PlayerState.AIR;
+            }
         }
 
         if (InputCheck())
@@ -39,9 +59,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private bool GroundCheck()
+    private bool IsGrounded()
     {
-        return false;
+        //return (Physics.Raycast(transform.position, -Vector2.up, 1f));
+        return Physics2D.OverlapCircle(GroundCheck.position, 0.8f, CollisionMask);
     }
 
     private bool InputCheck()
@@ -62,11 +83,6 @@ public class PlayerController : MonoBehaviour
     private void Initialize()
     {
         PlayerState = PlayerState.GROUND;
-#if UNITY_STANDALONE || UNITY_EDITOR
-        _playerInputType = InputType.KEYBOARD;
-#else
-        _playerInputType = InputType.TOUCH;
-#endif
     }
 
     private void ActionChange(PlayerState action)
@@ -87,16 +103,33 @@ public class PlayerController : MonoBehaviour
 
     private void Jump()
     {
-        Debug.Log("Jump!");
+        transform.GetComponent<Rigidbody2D>().AddForce(Vector2.up * JumpForce, ForceMode2D.Force);
+    }
+
+    private void Enlarge()
+    {
+        //every tick
+        //if size < MAX -> size++
     }
 
     private void Shrink()
     {
-        Debug.Log("Shrink!");
+        //snow particle effect
+        //sound effect
+        // if size > MIN -> size--
     }
 
     private void Fly()
     {
-        Debug.Log("Lets fly!");
+        //var flyTime = x
+        //add Y force; flyTime--
+    }
+
+    private void Land()
+    {
+        //snow burst particle effect
+        //sound effect
+        //screen shake
+        // if size > threshold -> destroy 
     }
 }
