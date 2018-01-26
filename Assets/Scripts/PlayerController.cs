@@ -32,7 +32,13 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(IsGrounded());
+        if (InputCheck())
+        {
+            _playerAction();
+        }
+
+        if (!GameController.instance.GameStarted) return;
+
         if (IsGrounded())
         {
             if (PlayerState != PlayerState.GROUND)
@@ -52,16 +58,10 @@ public class PlayerController : MonoBehaviour
                 PlayerState = PlayerState.AIR;
             }
         }
-
-        if (InputCheck())
-        {
-            _playerAction();
-        }
     }
 
     private bool IsGrounded()
     {
-        //return (Physics.Raycast(transform.position, -Vector2.up, 1f));
         return Physics2D.OverlapCircle(GroundCheck.position, 0.8f, CollisionMask);
     }
 
@@ -82,7 +82,17 @@ public class PlayerController : MonoBehaviour
 
     private void Initialize()
     {
+        _playerAction = StartPlayer;
+    }
+
+    private void StartPlayer()
+    {
+        GetComponent<Rigidbody2D>().gravityScale = 1;
+        GetComponent<Rigidbody2D>().AddForce(Vector2.right * 100);
         PlayerState = PlayerState.GROUND;
+        GameController.instance.GameStarted = true;
+        Camera.main.GetComponent<CameraFollow>().enabled = true;
+        UIController.instance.FadeOut();
     }
 
     private void ActionChange(PlayerState action)
@@ -119,6 +129,11 @@ public class PlayerController : MonoBehaviour
         // if size > MIN -> size--
     }
 
+    private void ResetSize()
+    {
+        // if hit bird -> ResetSize()
+    }
+
     private void Fly()
     {
         //var flyTime = x
@@ -130,6 +145,22 @@ public class PlayerController : MonoBehaviour
         //snow burst particle effect
         //sound effect
         //screen shake
-        // if size > threshold -> destroy 
+        // if size > threshold -> Die()
+        // if prev state == AIR -> reset sprite
+    }
+
+    private void Die()
+    {
+        //fragment shader
+        //particle effect
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.transform.tag == "Bird")
+        {
+            ResetSize();
+            //change sprite
+        }
     }
 }
