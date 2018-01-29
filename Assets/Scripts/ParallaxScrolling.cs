@@ -30,7 +30,9 @@ public class ParallaxScrolling : MonoBehaviour {
 	private void Update()
     {
         float deltaX = cameraTransform.position.x - lastCameraX;
+        //transform.position += Vector3.right * (deltaX * ParallaxSpeed);
         transform.position += Vector3.right * (deltaX * ParallaxSpeed);
+        transform.position = new Vector2(transform.position.x, cameraTransform.position.y);
         lastCameraX = cameraTransform.position.x;
 
         //if (Input.GetKeyDown(KeyCode.A))
@@ -48,6 +50,7 @@ public class ParallaxScrolling : MonoBehaviour {
     {
         int lastRight = rightIndex;
         layers[rightIndex].position = Vector3.right * (layers[leftIndex].position.x - BackgroundSize);
+        layers[rightIndex].position = new Vector2(layers[rightIndex].position.x, cameraTransform.position.y);
         leftIndex = rightIndex;
         rightIndex--;
         if (rightIndex < 0)
@@ -58,6 +61,7 @@ public class ParallaxScrolling : MonoBehaviour {
     {
         int lastLeft = leftIndex;
         layers[leftIndex].position = Vector3.right * (layers[rightIndex].position.x + BackgroundSize);
+        layers[leftIndex].position = new Vector2(layers[leftIndex].position.x, cameraTransform.position.y);
         rightIndex = leftIndex;
         leftIndex++;
         if (leftIndex == layers.Length)

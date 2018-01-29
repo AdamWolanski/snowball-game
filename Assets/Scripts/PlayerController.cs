@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     private Action _playerAction;
     private InputType _playerInputType;
     private PlayerState _playerState;
+    private Rigidbody2D _playerRigidbody;
+
     public PlayerState PlayerState
     {
         get { return _playerState; }
@@ -24,6 +26,12 @@ public class PlayerController : MonoBehaviour
     public Transform GroundCheck;
     public float CollisionCircleRadius;
     public float JumpForce;
+    public float ShrinkSpeed;
+
+    private void Awake()
+    {
+        _playerRigidbody = GetComponent<Rigidbody2D>();
+    }
 
     private void Start()
     {
@@ -41,6 +49,8 @@ public class PlayerController : MonoBehaviour
 
         if (IsGrounded())
         {
+            Debug.Log("grounded");
+            Enlarge();
             if (PlayerState != PlayerState.GROUND)
             {
                 Land();
@@ -48,7 +58,8 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                Enlarge();
+                
+                
             }
         }
         else
@@ -60,9 +71,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawSphere(transform.position + (new Vector3(0, -transform.localScale.y/2) / 2), transform.localScale.y/2);
+    }
+
     private bool IsGrounded()
     {
-        return Physics2D.OverlapCircle(GroundCheck.position, 0.8f, CollisionMask);
+        return Physics2D.OverlapCircle(transform.position + new Vector3(0, -transform.localScale.y/4) / 2, transform.localScale.y / 2, CollisionMask);
     }
 
     private bool InputCheck()
@@ -88,7 +104,7 @@ public class PlayerController : MonoBehaviour
     private void StartPlayer()
     {
         GetComponent<Rigidbody2D>().gravityScale = 1;
-        GetComponent<Rigidbody2D>().AddForce(Vector2.right * 100);
+        GetComponent<Rigidbody2D>().AddForce(Vector2.right * 200);
         PlayerState = PlayerState.GROUND;
         GameController.instance.GameStarted = true;
         Camera.main.GetComponent<CameraFollow>().enabled = true;
@@ -120,6 +136,8 @@ public class PlayerController : MonoBehaviour
     {
         //every tick
         //if size < MAX -> size++
+        if (_playerRigidbody.velocity.x > 0)
+            transform.localScale *= 1f + ShrinkSpeed * Time.deltaTime;
     }
 
     private void Shrink()
@@ -127,6 +145,10 @@ public class PlayerController : MonoBehaviour
         //snow particle effect
         //sound effect
         // if size > MIN -> size--
+
+        var x = 0.1f;
+        if (transform.localScale.y > 1 + x)
+            transform.localScale -= new Vector3(x,x,0);
     }
 
     private void ResetSize()
@@ -157,10 +179,13 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.transform.tag == "Bird")
+        switch(collision.transform.tag)
         {
-            ResetSize();
-            //change sprite
+            case "Bird":
+                break;
+            case "Obstacle":
+                Die();
+                break;
         }
     }
 }
