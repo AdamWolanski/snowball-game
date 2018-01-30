@@ -27,8 +27,12 @@ public class TerrainGenerator : MonoBehaviour {
     private void GenerateNextSegment(Segment lastSegment)
     {
         Segment newSegment = GetRandomSegment(lastSegment);
-
-        Vector2 pos = new Vector2(lastSegment.transform.position.x + newSegment.SegWidth*2, lastSegment.transform.position.y + (lastSegment.EndAnchorY - newSegment.StartAnchorY));
+        var anch_y = newSegment.StartAnchorY;
+        if (newSegment.SegmentType == SegmentType.JUMP_END)
+        {
+            anch_y += Random.Range(0, 6);
+        }
+        Vector2 pos = new Vector2(lastSegment.transform.position.x + newSegment.SegWidth*2, lastSegment.transform.position.y + (lastSegment.EndAnchorY - anch_y));
         var x = Instantiate(newSegment, pos, Quaternion.identity);
         x.transform.parent = this.transform;
         _segments.Add(x);

@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4671106496445298}
   m_Layer: 9
   m_Name: 2
-  m_TagString: Untagged
+  m_TagString: Anchor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36,7 +36,7 @@ GameObject:
   - component: {fileID: 4779270943503504}
   m_Layer: 9
   m_Name: 1
-  m_TagString: Untagged
+  m_TagString: Anchor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -60,6 +60,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1621021825200420
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4883001530197044}
+  - component: {fileID: 61153694525844786}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Obstacle
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &4615357912677832
 Transform:
   m_ObjectHideFlags: 1
@@ -67,11 +83,12 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1227299976241058}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 82.64504, y: 5.8784227, z: 0}
+  m_LocalPosition: {x: 866.7356, y: -125.89559, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4779270943503504}
   - {fileID: 4671106496445298}
+  - {fileID: 4883001530197044}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -100,6 +117,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4615357912677832}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4883001530197044
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1621021825200420}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -6.32, y: 0.22, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4615357912677832}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!60 &60132892066725362
 PolygonCollider2D:
@@ -199,6 +229,31 @@ PolygonCollider2D:
       - {x: 9.599999, y: -5.4}
       - {x: 9.599999, y: 2.73}
       - {x: 0.59999996, y: 2.73}
+--- !u!61 &61153694525844786
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1621021825200420}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -1.0328026}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 8.619034}
+  m_EdgeRadius: 0
 --- !u!114 &114497539243551210
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -210,11 +265,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56ad69fca5a55884ab7c778915c0c444, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartAnchorY: 4.15
+  StartAnchorY: 0
   EndAnchorY: 2.716
   SegWidth: 9.6
   SegmentType: 2
-  obstacleChance: 33
+  obstacleChance: 15
   obstacles: []
 --- !u!212 &212709456823226956
 SpriteRenderer:

@@ -24,4 +24,8 @@ public class GameController : MonoBehaviour {
 		//distance score
         //quests?
 	}
+
+    private void RestartGame()
+    {
+    }
 }

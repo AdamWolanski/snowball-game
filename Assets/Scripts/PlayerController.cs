@@ -27,6 +27,9 @@ public class PlayerController : MonoBehaviour
     public float CollisionCircleRadius;
     public float JumpForce;
     public float ShrinkSpeed;
+    public ParticleSystem SnowTrailParticle;
+    public ParticleSystem SnowExplosionParticle;
+    public Vector2 StartPosition;
 
     private void Awake()
     {
@@ -49,17 +52,11 @@ public class PlayerController : MonoBehaviour
 
         if (IsGrounded())
         {
-            Debug.Log("grounded");
             Enlarge();
             if (PlayerState != PlayerState.GROUND)
             {
                 Land();
                 PlayerState = PlayerState.GROUND;
-            }
-            else
-            {
-                
-                
             }
         }
         else
@@ -109,6 +106,7 @@ public class PlayerController : MonoBehaviour
         GameController.instance.GameStarted = true;
         Camera.main.GetComponent<CameraFollow>().enabled = true;
         UIController.instance.FadeOut();
+        SnowTrailParticle.Play();
     }
 
     private void ActionChange(PlayerState action)
@@ -145,8 +143,8 @@ public class PlayerController : MonoBehaviour
         //snow particle effect
         //sound effect
         // if size > MIN -> size--
-
-        var x = 0.1f;
+        SnowExplosionParticle.Play();
+        var x = 0.05f;
         if (transform.localScale.y > 1 + x)
             transform.localScale -= new Vector3(x,x,0);
     }
@@ -154,6 +152,7 @@ public class PlayerController : MonoBehaviour
     private void ResetSize()
     {
         // if hit bird -> ResetSize()
+        transform.localScale = Vector3.one;
     }
 
     private void Fly()
@@ -165,6 +164,16 @@ public class PlayerController : MonoBehaviour
     private void Land()
     {
         //snow burst particle effect
+        if (transform.localScale.x > 1.5)
+        {
+            SnowExplosionParticle.Play();
+            Camera.main.GetComponent<CameraFollow>().Shake = 0.2f;
+            if (_playerRigidbody.velocity.y > -10)
+            {
+                Die();
+            }
+        }
+
         //sound effect
         //screen shake
         // if size > threshold -> Die()
@@ -175,11 +184,32 @@ public class PlayerController : MonoBehaviour
     {
         //fragment shader
         //particle effect
+        SnowExplosionParticle.Play();
+        gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
+        SnowTrailParticle.Stop();
+
+        //screen shake
+        Camera.main.GetComponent<CameraFollow>().Shake = 0.5f;
+
+        UIController.instance.SetText("Tap to restart");
+        UIController.instance.FadeIn();
+        _playerAction = RestartPlayer;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void RestartPlayer()
     {
-        switch(collision.transform.tag)
+        StartPlayer();
+        ResetSize();
+        gameObject.transform.position = StartPosition;
+        gameObject.GetComponent<SpriteRenderer>().enabled = true;
+        gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        switch(collider.transform.tag)
         {
             case "Bird":
                 break;

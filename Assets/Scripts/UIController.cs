@@ -30,14 +30,7 @@ public class UIController : MonoBehaviour {
 	
 	private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))//Debug fade in
-        {
-            FadeIn();
-        }
-        if (Input.GetKeyDown(KeyCode.E))//Debug fade out
-        {
-            FadeOut();
-        }
+        
     }
 
     public void FadeOut()

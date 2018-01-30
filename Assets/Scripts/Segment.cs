@@ -26,7 +26,8 @@ public class Segment : MonoBehaviour {
 
         foreach(Transform child in transform)
         {
-            anchors.Add(child);
+            if (child.tag == "Anchor")
+                anchors.Add(child);
         }
 
         GenerateObstacles();
@@ -37,11 +38,12 @@ public class Segment : MonoBehaviour {
         for (int i = 0; i < anchors.Count; ++i)
         {
             var rnd = Random.Range(0, 100);
-            if (rnd > obstacleChance)
+            if (rnd < obstacleChance)
             {
                 GameObject x = Instantiate(obstacles[Random.Range(0, obstacles.Length)], anchors[i].position, anchors[i].rotation) as GameObject;
-                x.transform.localPosition -= x.gameObject.transform.GetChild(0).localPosition;
                 x.transform.parent = transform;
+                x.transform.position += (x.transform.position - x.transform.GetChild(0).position);
+                
             }
         }
     }

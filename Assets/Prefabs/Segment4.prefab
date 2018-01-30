@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4687919514574036}
   m_Layer: 9
   m_Name: 1
-  m_TagString: Untagged
+  m_TagString: Anchor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 4536598463046440}
   m_Layer: 9
   m_Name: 2
-  m_TagString: Untagged
+  m_TagString: Anchor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -218,7 +218,7 @@ MonoBehaviour:
   EndAnchorY: 3.39
   SegWidth: 9.6
   SegmentType: 1
-  obstacleChance: 33
+  obstacleChance: 15
   obstacles: []
 --- !u!212 &212709456823226956
 SpriteRenderer:
