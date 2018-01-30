@@ -162,6 +162,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114497539243551210, guid: 5d8145887705ef24aaa10431c7aeae77,
+        type: 2}
+      propertyPath: obstacleChance
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5d8145887705ef24aaa10431c7aeae77, type: 2}
   m_IsPrefabParent: 0
@@ -293,3 +298,4 @@ MonoBehaviour:
   - {fileID: 114497539243551210, guid: f37073d47222d21489d5282db7c50d73, type: 2}
   - {fileID: 114497539243551210, guid: 916fa90e0f7e7524694d84e2cfe64f7c, type: 2}
   - {fileID: 114497539243551210, guid: 1db42138061bf9440afa6c625028f216, type: 2}
+  GenerateSegments: 0

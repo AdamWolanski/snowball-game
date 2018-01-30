@@ -6,6 +6,8 @@ public class TerrainGenerator : MonoBehaviour {
 
     public Segment StartSegment;
     public Segment[] AvaliableSegments;
+    public bool GenerateSegments;
+
     private List<Segment> _segments;
     private int segs = 100;
 
@@ -17,6 +19,7 @@ public class TerrainGenerator : MonoBehaviour {
 	
 	void Update ()
     {
+        if (!GenerateSegments) return;
         while (segs-- > 0)
             GenerateNextSegment(_segments[_segments.Count - 1]);
 	}
