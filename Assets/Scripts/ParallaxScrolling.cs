@@ -6,6 +6,7 @@ public class ParallaxScrolling : MonoBehaviour {
 
     public float BackgroundSize;
     public float ParallaxSpeed;
+    public bool LockY = false;
 
     private Transform cameraTransform;
     private Transform[] layers;
@@ -32,7 +33,8 @@ public class ParallaxScrolling : MonoBehaviour {
         float deltaX = cameraTransform.position.x - lastCameraX;
         //transform.position += Vector3.right * (deltaX * ParallaxSpeed);
         transform.position += Vector3.right * (deltaX * ParallaxSpeed);
-        transform.position = new Vector2(transform.position.x, cameraTransform.position.y);
+        if (LockY)
+            transform.position = new Vector2(transform.position.x, cameraTransform.position.y);
         lastCameraX = cameraTransform.position.x;
 
         //if (Input.GetKeyDown(KeyCode.A))
