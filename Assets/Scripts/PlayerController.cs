@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour
 
     private bool InputCheck()
     {
-#if false //UNITY_STANDALONE || UNITY_EDITOR
+#if UNITY_STANDALONE || UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.Space))
         {
 #else
