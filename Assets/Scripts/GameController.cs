@@ -8,19 +8,20 @@ public class GameController : MonoBehaviour {
     public bool GameStarted = false;
     public bool ForceTouchScreen = false;
 
-    private void Start()
+    private void Awake()
     {
-        if (instance == null)
-            instance = this;
-        else
+        
+
+        if (instance != null || instance != this)
             Destroy(this.gameObject);
 
-        DontDestroyOnLoad(gameObject);
+        instance = this;
+        DontDestroyOnLoad(this.gameObject);
 
         //load UI additive
-        SceneManager.LoadScene(0, LoadSceneMode.Additive);
-        
-	}
+        SceneManager.LoadScene(1, LoadSceneMode.Additive);
+
+    }
 	
 	void Update () {
 		//distance score
