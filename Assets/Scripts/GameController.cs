@@ -6,6 +6,7 @@ public class GameController : MonoBehaviour {
     public static GameController instance = null;
     public bool TutorialEnabled = true;
     public bool GameStarted = false;
+    public bool ForceTouchScreen = false;
 
     private void Start()
     {
@@ -18,6 +19,7 @@ public class GameController : MonoBehaviour {
 
         //load UI additive
         SceneManager.LoadScene(0, LoadSceneMode.Additive);
+        
 	}
 	
 	void Update () {

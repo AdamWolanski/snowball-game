@@ -143,6 +143,7 @@ public class PlayerController : MonoBehaviour
         //snow particle effect
         //sound effect
         // if size > MIN -> size--
+        
         SnowExplosionParticle.Play();
         var x = 0.05f;
         if (transform.localScale.y > 1 + x)
@@ -163,6 +164,7 @@ public class PlayerController : MonoBehaviour
 
     private void Land()
     {
+        
         //snow burst particle effect
         if (transform.localScale.x > 1.5)
         {
@@ -170,7 +172,7 @@ public class PlayerController : MonoBehaviour
             Camera.main.GetComponent<CameraFollow>().Shake = 0.2f;
             if (_playerRigidbody.velocity.y > -10)
             {
-                Die();
+                //Die();
             }
         }
 
@@ -189,7 +191,7 @@ public class PlayerController : MonoBehaviour
         gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
         SnowTrailParticle.Stop();
-
+        GetComponent<AudioSource>().Play();
         //screen shake
         Camera.main.GetComponent<CameraFollow>().Shake = 0.5f;
 
